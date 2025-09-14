@@ -64,7 +64,7 @@ const Navbar = () => {
                 alt="Logo"
                 width={56}
                 height={56}
-                className="mt-10 object-contain h-20 w-auto rounded-full -my-2 shadow"
+                className="mt-15 object-contain h-25 w-auto rounded-full -my-2 shadow"
                 priority
               />
             </a>
@@ -79,7 +79,7 @@ const Navbar = () => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`text-lg font-semibold transition-colors duration-200 px-1 ${
+                  className={`text-sm font-semibold transition-colors duration-200 px-7 ${
                     isActive
                       ? "text-[#DE6868] underline underline-offset-8 decoration-2 decoration-[#DE6868]"
                       : "text-gray-800 hover:text-[#DE6868]"
