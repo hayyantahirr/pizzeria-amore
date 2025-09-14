@@ -64,7 +64,7 @@ const Navbar = () => {
                 alt="Logo"
                 width={56}
                 height={56}
-                className="mt-15 object-contain h-25 w-auto rounded-full -my-2 shadow"
+                className="md:mt-15 mt-5 object-contain h-15 md:h-25 w-auto rounded-full -my-2 shadow"
                 priority
               />
             </a>
