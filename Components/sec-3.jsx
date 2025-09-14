@@ -75,8 +75,8 @@ const Sec3 = () => {
             </div>
           </div>
 
-          {/* Right side - Images */}
-          <div className="flex-1 flex flex-col md:flex-row lg:flex-col gap-6">
+          {/* Right side - Images (hidden on mobile) */}
+          <div className="hidden md:flex flex-1 flex-col md:flex-row lg:flex-col gap-6">
             {/* Top image */}
             <div className="relative">
               <Image
