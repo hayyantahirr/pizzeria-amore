@@ -13,7 +13,7 @@ const pizzaImages = [
 
 const Sec2 = () => {
   return (
-    <section className="relative w-full min-h-[80vh] flex items-center justify-center bg-[#F5F2EF] overflow-hidden py-16">
+    <section className="relative w-full min-h-[80vh] flex items-center justify-center bg-[#F8F9FA] overflow-hidden py-16">
       {/* Background watermark images */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none select-none">
         {/* 4 whole-pizza watermarks */}
