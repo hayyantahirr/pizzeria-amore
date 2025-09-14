@@ -86,7 +86,7 @@ const Hero = () => {
           </div>
           {/* Main heading (black) */}
           <h1 className="text-xl md:text-3xl font-extrabold text-black leading-tight mb-2 font-serif ">
-          Love baked within every crust, cheese melts into hearts
+            Love baked within every crust, cheese melts into hearts
           </h1>
           {/* Subtext below heading */}
           <p className="text-base md:text-lg text-gray-700 mb-6 font-light max-w-xl">
