@@ -4,6 +4,7 @@ import Sec1 from "@/Components/sec-1";
 import Sec2 from "@/Components/sec-2";
 import Sec3 from "@/Components/sec-3";
 import Sec4 from "@/Components/sec-4";
+import Footer from "@/Components/Footer";
 import React from "react";
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <Sec2 />
       <Sec3 />
       <Sec4 />
+      <Footer />
     </>
   );
 };
