@@ -10,13 +10,11 @@ import React from "react";
 const Home = () => {
   return (
     <>
-      <Navbar />
       <Hero />
       <Sec1 />
       <Sec2 />
       <Sec3 />
       <Sec4 />
-      <Footer />
     </>
   );
 };
