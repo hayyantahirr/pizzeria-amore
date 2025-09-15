@@ -6,7 +6,7 @@ const signatureSrc = "/extra's/signature design.svg";
 
 const AboutHero = () => {
   return (
-    <section className="relative w-full min-h-[60vh] flex items-center bg-[#F5F2EF] overflow-hidden mt-10">
+    <section className="relative w-full min-h-[60vh] flex items-center bg-[#F8F9FA] overflow-hidden mt-10">
       {/* Background watermarks */}
       <div className="absolute inset-0 z-0 pointer-events-none select-none">
         {/* Desktop: show watermark with left offset; Mobile: hide */}
