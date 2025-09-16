@@ -1,12 +1,15 @@
 import React from "react";
 import Image from "next/image";
 import ContactCard from "@/Components/ContactCard";
+import Navbar from "@/Components/Navbar";
+import Footer from "@/Components/Footer";
 
 const signatureSrc = "/extra's/signature design.svg";
 
 const page = () => {
   return (
     <>
+      <Navbar />
       {/* Hero */}
       <section className="mt-15 relative w-full min-h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="relative z-10 flex flex-col items-start text-left w-full max-w-5xl px-4 py-16 md:py-20 mx-auto">
@@ -63,6 +66,7 @@ const page = () => {
           <ContactCard />
         </div>
       </section>
+      <Footer />
     </>
   );
 };

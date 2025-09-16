@@ -1,30 +1,55 @@
 "use client";
 
 import { useEffect } from "react";
-
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 
-export default function AuthCallback() {
+export default function AuthCallbackPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleSession = async () => {
-      const {
-        data: { session },
-        error,
-      } = await supabase.auth.getSession();
+    const handleAuthCallback = async () => {
+      try {
+        // Get the current user session
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error("Error getting session:", error.message);
+          router.push("/");
+          return;
+        }
 
-      if (error) {
-        console.error("Session error:", error.message);
-      } else {
-        console.log("User session:", session);
-        router.push("/"); // redirect to homepage (or dashboard)
+        if (!session) {
+          // No session, redirect to home
+          router.push("/");
+          return;
+        }
+
+        // Check if the user is the admin
+        const userEmail = session.user.email;
+        
+        if (userEmail === "hayyantahirr@gmail.com") {
+          // Admin user - redirect to admin dashboard
+          router.push("/admin-dashboard");
+        } else {
+          // Regular user - redirect to home page
+          router.push("/");
+        }
+      } catch (err) {
+        console.error("Auth callback error:", err);
+        router.push("/");
       }
     };
 
-    handleSession();
+    handleAuthCallback();
   }, [router]);
 
-  return <p>Loading...</p>;
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold mb-4">Processing your authentication...</h2>
+        <div className="w-16 h-16 border-t-4 border-[#DE6868] border-solid rounded-full animate-spin mx-auto"></div>
+      </div>
+    </div>
+  );
 }
