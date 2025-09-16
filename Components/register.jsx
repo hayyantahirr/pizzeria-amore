@@ -38,6 +38,32 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
     }
   };
 
+  // Login user by email and password
+  async function registerUser() {
+    setErrorMessage("");
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          data: {
+            name,
+            display_name: name,
+          },
+        },
+      });
+      if (error) throw error;
+      router.push("/auth/callback");
+      onClose?.();
+    } catch (err) {
+      setErrorMessage(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div
       className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm flex items-center justify-center px-4"
@@ -145,27 +171,7 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
         <button
           type="button"
           disabled={loading}
-          onClick={async () => {
-            setErrorMessage("");
-            setLoading(true);
-            try {
-              const { error } = await supabase.auth.signUp({
-                email,
-                password,
-                options: {
-                  emailRedirectTo: `${window.location.origin}/auth/callback`,
-                  data: { name },
-                },
-              });
-              if (error) throw error;
-              router.push("/auth/callback");
-              onClose?.();
-            } catch (err) {
-              setErrorMessage(err.message || "Registration failed");
-            } finally {
-              setLoading(false);
-            }
-          }}
+          onClick={registerUser}
           className="w-full bg-[#DE6868] hover:bg-[#c75858] text-white font-semibold py-2 rounded-lg transition-colors mb-3 disabled:opacity-60"
         >
           {loading ? "Registering..." : "Register"}
