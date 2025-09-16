@@ -1,10 +1,19 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 const Register = ({ isOpen, onClose, onSwitch }) => {
   const modalRef = useRef(null);
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
+  // open and close functionality
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -57,6 +66,8 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
           type="text"
           placeholder="Name"
           className="w-full rounded-lg border border-gray-300 px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-[#DE6868]"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <label className="sr-only" htmlFor="register-email">
@@ -67,6 +78,8 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
           type="email"
           placeholder="Email"
           className="w-full rounded-lg border border-gray-300 px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-[#DE6868]"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <div className="relative mb-4">
@@ -78,6 +91,8 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
             type={showPassword ? "text" : "password"}
             placeholder="Password"
             className="w-full rounded-lg border border-gray-300 px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-[#DE6868]"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button
             type="button"
@@ -123,12 +138,37 @@ const Register = ({ isOpen, onClose, onSwitch }) => {
             )}
           </button>
         </div>
+        {errorMessage && (
+          <div className="text-sm text-red-600 mb-2">{errorMessage}</div>
+        )}
 
         <button
           type="button"
-          className="w-full bg-[#DE6868] hover:bg-[#c75858] text-white font-semibold py-2 rounded-lg transition-colors mb-3"
+          disabled={loading}
+          onClick={async () => {
+            setErrorMessage("");
+            setLoading(true);
+            try {
+              const { error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                  emailRedirectTo: `${window.location.origin}/auth/callback`,
+                  data: { name },
+                },
+              });
+              if (error) throw error;
+              router.push("/auth/callback");
+              onClose?.();
+            } catch (err) {
+              setErrorMessage(err.message || "Registration failed");
+            } finally {
+              setLoading(false);
+            }
+          }}
+          className="w-full bg-[#DE6868] hover:bg-[#c75858] text-white font-semibold py-2 rounded-lg transition-colors mb-3 disabled:opacity-60"
         >
-          Register
+          {loading ? "Registering..." : "Register"}
         </button>
 
         <p className="text-center text-sm text-gray-600 mt-auto">

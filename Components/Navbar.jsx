@@ -1,9 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Login from "./login";
 import Register from "./register";
+import { supabase } from "@/lib/supabaseClient";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -19,6 +20,23 @@ const Navbar = () => {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const pathname = usePathname();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setIsAuthenticated(!!data.session);
+    };
+    getSession();
+    const { data: subscription } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setIsAuthenticated(!!session);
+      }
+    );
+    return () => {
+      subscription.subscription?.unsubscribe?.();
+    };
+  }, []);
 
   return (
     <>
@@ -84,7 +102,18 @@ const Navbar = () => {
                   (pathname === link.href ||
                     (link.href === "/" && pathname === "/"));
                 if (link.name === "Login/Register") {
-                  return (
+                  return isAuthenticated ? (
+                    <button
+                      key="Logout"
+                      type="button"
+                      onClick={async () => {
+                        await supabase.auth.signOut();
+                      }}
+                      className="text-sm font-semibold transition-colors duration-200 px-7 text-gray-800 hover:text-[#DE6868]"
+                    >
+                      Logout
+                    </button>
+                  ) : (
                     <button
                       key={link.name}
                       type="button"
@@ -122,7 +151,19 @@ const Navbar = () => {
                   (pathname === link.href ||
                     (link.href === "/" && pathname === "/"));
                 if (link.name === "Login/Register") {
-                  return (
+                  return isAuthenticated ? (
+                    <button
+                      key="Logout"
+                      type="button"
+                      className="block text-left w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 text-gray-800 hover:text-[#DE6868]"
+                      onClick={async () => {
+                        await supabase.auth.signOut();
+                        setMenuOpen(false);
+                      }}
+                    >
+                      Logout
+                    </button>
+                  ) : (
                     <button
                       key={link.name}
                       type="button"
