@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import AdminDash from '@/Components/AdminDash';
+import AdminDash from "@/Components/AdminDash";
 
 const Admin = () => {
-  const [showSidebar, setShowSidebar] = useState(true)
+  const [showSidebar, setShowSidebar] = useState(true);
 
   const toggleSidebar = () => {
-    setShowSidebar(!showSidebar)
-  }
+    setShowSidebar(!showSidebar);
+  };
 
   return (
-    <><AdminDash/></>
-  )
-}
+    <>
+      <AdminDash />
+    </>
+  );
+};
 
-export default Admin
+export default Admin;

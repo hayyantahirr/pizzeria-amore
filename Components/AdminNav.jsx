@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -56,6 +55,7 @@ const AdminNav = ({ toggleSidebar }) => {
           <button
             onClick={toggleSidebar}
             className="text-gray-600 hover:text-gray-900 focus:outline-none"
+            aria-label="Toggle Sidebar"
           >
             <FaBars size={20} />
           </button>

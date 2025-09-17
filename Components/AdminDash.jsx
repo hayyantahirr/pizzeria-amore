@@ -35,7 +35,8 @@ const AdminDash = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       <AdminSidebar 
-        showSidebar={showSidebar} 
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
         setActiveComponent={setActiveComponent} 
         activeComponent={activeComponent}
       />
