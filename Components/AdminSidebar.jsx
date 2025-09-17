@@ -40,18 +40,20 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
   return (
     <div
       ref={sidebarRef}
-      className={`w-64 bg-white shadow-sm h-screen fixed md:relative transition-all duration-300 z-20 ${
+      className={`w-64 h-screen fixed md:relative transition-all duration-300 z-20 ${
         showSidebar ? "left-0" : "-left-64 md:left-0"
       }`}
+      style={{ backgroundColor: 'var(--sidebar-bg)' }}
     >
       <div className="p-4">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800">Pizzeria Amore</h2>
+          <h2 className="text-xl font-bold" style={{ color: 'var(--sidebar-text)' }}>Pizzeria Amore</h2>
           {/* Close button - visible only on mobile */}
           <button 
-            className="md:hidden text-gray-500 hover:text-gray-700"
+            className="md:hidden hover:opacity-80"
             onClick={() => setShowSidebar(false)}
             aria-label="Close Sidebar"
+            style={{ color: 'var(--sidebar-text)' }}
           >
             <FaTimes size={20} />
           </button>
@@ -65,9 +67,17 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full pl-10 pr-4 py-2 rounded-lg border focus:outline-none"
+              style={{
+                backgroundColor: 'var(--background)',
+                color: 'var(--foreground)',
+                borderColor: 'var(--sidebar-text)',
+                '--ring-color': 'var(--accent)',
+              }}
+              onFocus={(e) => e.target.style.boxShadow = `0 0 0 2px var(--ring-color)`}
+              onBlur={(e) => e.target.style.boxShadow = 'none'}
             />
-            <FaSearch className="absolute left-3 top-3 text-gray-400" />
+            <FaSearch className="absolute left-3 top-3" style={{ color: 'var(--sidebar-text)' }} />
           </div>
         </div>
 
@@ -76,9 +86,13 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('dashboard')}
-                className={`w-full flex items-center p-3 text-gray-600 rounded-md ${
-                  activeComponent === 'dashboard' ? 'bg-gray-100 text-gray-700' : 'hover:bg-gray-100'
+                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                  activeComponent === 'dashboard' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
+                style={{
+                  backgroundColor: activeComponent === 'dashboard' ? 'var(--accent)' : 'transparent',
+                  color: activeComponent === 'dashboard' ? 'white' : 'var(--sidebar-text)',
+                }}
               >
                 <FaHome className="mr-3" />
                 <span>Dashboard</span>
@@ -87,9 +101,13 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('menu')}
-                className={`w-full flex items-center p-3 text-gray-600 rounded-md ${
-                  activeComponent === 'menu' ? 'bg-gray-100 text-gray-700' : 'hover:bg-gray-100'
+                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                  activeComponent === 'menu' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
+                style={{
+                  backgroundColor: activeComponent === 'menu' ? 'var(--accent)' : 'transparent',
+                  color: activeComponent === 'menu' ? 'white' : 'var(--sidebar-text)',
+                }}
               >
                 <FaPizzaSlice className="mr-3" />
                 <span>Menu Items</span>
@@ -98,9 +116,13 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('orders')}
-                className={`w-full flex items-center p-3 text-gray-600 rounded-md ${
-                  activeComponent === 'orders' ? 'bg-gray-100 text-gray-700' : 'hover:bg-gray-100'
+                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                  activeComponent === 'orders' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
+                style={{
+                  backgroundColor: activeComponent === 'orders' ? 'var(--accent)' : 'transparent',
+                  color: activeComponent === 'orders' ? 'white' : 'var(--sidebar-text)',
+                }}
               >
                 <FaClipboardList className="mr-3" />
                 <span>Order List</span>

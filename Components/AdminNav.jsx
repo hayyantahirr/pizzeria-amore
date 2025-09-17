@@ -48,14 +48,18 @@ const AdminNav = ({ toggleSidebar }) => {
   }, []);
 
   return (
-    <nav className="bg-white shadow-sm py-4 px-6">
+    <nav
+      className="shadow-sm p-4"
+      style={{ backgroundColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
+    >
       <div className="flex items-center justify-between">
         {/* Logo and Menu Icon */}
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleSidebar}
-            className="text-gray-600 hover:text-gray-900 focus:outline-none"
+            className="hover:opacity-75 focus:outline-none"
             aria-label="Toggle Sidebar"
+            style={{ color: 'var(--nav-text)' }}
           >
             <FaBars size={20} />
           </button>
@@ -67,7 +71,10 @@ const AdminNav = ({ toggleSidebar }) => {
               height={40}
               className="mr-2 rounded-full"
             />
-            <span className="text-xl font-bold text-gray-800 hidden sm:inline">
+            <span
+              className="text-xl font-bold hidden sm:inline"
+              style={{ color: 'var(--nav-text)' }}
+            >
               Pizzeria Amore
             </span>
           </div>
@@ -79,9 +86,20 @@ const AdminNav = ({ toggleSidebar }) => {
             <input
               type="text"
               placeholder="Search..."
-              className="w-full max-w-md pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              className="w-full max-w-md pl-10 pr-4 py-2 rounded-lg border focus:outline-none"
+              style={{
+                backgroundColor: 'var(--background)',
+                color: 'var(--foreground)',
+                borderColor: 'var(--nav-text)',
+                '--ring-color': 'var(--accent)',
+              }}
+              onFocus={(e) => e.target.style.boxShadow = `0 0 0 2px var(--ring-color)`}
+              onBlur={(e) => e.target.style.boxShadow = 'none'}
             />
-            <FaSearch className="absolute left-3 top-3 text-gray-400" />
+            <FaSearch
+              className="absolute left-3 top-3"
+              style={{ color: 'var(--nav-text)' }}
+            />
           </div>
         </div>
 
@@ -101,7 +119,10 @@ const AdminNav = ({ toggleSidebar }) => {
                   height={32}
                 />
               </div>
-              <span className="hidden md:inline text-sm font-medium text-gray-700">
+              <span
+                className="hidden md:inline text-sm font-medium"
+                style={{ color: 'var(--nav-text)' }}
+              >
                 {user.name}
               </span>
             </button>
