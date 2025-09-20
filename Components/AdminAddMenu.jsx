@@ -204,25 +204,7 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
               />
             </div>
 
-            {/* Item Size */}
-            <div className="mb-4">
-              <label className="block mb-2">Size</label>
-              <select
-                ref={sizeRef}
-                className="w-full px-3 py-2 border rounded-md"
-                style={{
-                  backgroundColor: "var(--background)",
-                  color: "var(--foreground)",
-                  borderColor: "var(--card-text)",
-                }}
-                required
-              >
-                <option value="">Select Size</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-              </select>
-            </div>
+           
 
             {/* Item Category */}
             <div className="mb-4">

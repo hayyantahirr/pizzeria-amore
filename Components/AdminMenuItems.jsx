@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import AdminAddMenu from "./AdminAddMenu";
+import AdminCards from "./AdminCards";
 
 const AdminMenuItems = () => {
   // State to control modal visibility
@@ -28,7 +29,7 @@ const AdminMenuItems = () => {
         className="rounded-lg shadow p-4"
         style={{ backgroundColor: "var(--card-bg)", color: "var(--card-text)" }}
       >
-        <p>No items Uploaded yet.</p>
+        <AdminCards/>
       </div>
       
       {/* Modal component for adding new menu items */}

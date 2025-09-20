@@ -4,7 +4,7 @@ export async function POST(req) {
   try {
     // 1. Read body (what client sent)
     const body = await req.json();
-    const { name, description, price, imageUrl, size, category } = body;
+    const { name, description, price, imageUrl,  category } = body;
 
     // 2. Insert into products
     const { data, error } = await supabaseAdmin.from("dishes").insert([
@@ -13,7 +13,7 @@ export async function POST(req) {
         item_desc: description,
         item_price: price,
         item_pic: imageUrl,
-        item_size: size,
+        
         item_category: category,
       },
     ]);
