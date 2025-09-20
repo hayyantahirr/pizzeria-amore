@@ -20,6 +20,8 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
   const descriptionRef = useRef(null);
   const priceRef = useRef(null);
   const imageRef = useRef(null);
+  const sizeRef = useRef(null);
+  const categoryRef = useRef(null);
 
   // Ref for the modal to detect outside clicks
   const modalRef = useRef(null);
@@ -79,9 +81,11 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
       const description = descriptionRef.current.value;
       const price = parseFloat(priceRef.current.value);
       const imageFile = imageRef.current.files[0];
+      const size = sizeRef.current.value;
+      const category = categoryRef.current.value;
 
       // Validate inputs
-      if (!name || !description || !price || !imageFile) {
+      if (!name || !description || !price || !imageFile || !size || !category) {
         setNotification({
           show: true,
           message: "Please fill all fields",
@@ -95,11 +99,13 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
       const imageUrl = await uploadImage(imageFile);
 
       // Send data to API
-       await axios.post("/api/add-product", {
+      await axios.post("/api/add-product", {
         name,
         description,
         price,
         imageUrl,
+        size,
+        category,
       });
 
       // Show success notification
@@ -138,105 +144,148 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div
         ref={modalRef}
-        className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md"
+        className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto"
         style={{ backgroundColor: "var(--card-bg)", color: "var(--card-text)" }}
       >
         <h3 className="text-xl font-bold mb-4">Add New Menu Item</h3>
 
-        <form onSubmit={handleSubmit}>
-          {/* Item Name */}
-          <div className="mb-4">
-            <label className="block mb-2">Item Name</label>
-            <input
-              type="text"
-              ref={nameRef}
-              className="w-full px-3 py-2 border rounded-md"
-              style={{
-                backgroundColor: "var(--background)",
-                color: "var(--foreground)",
-                borderColor: "var(--card-text)",
-              }}
-              placeholder="Pizza Name"
-              required
-            />
-          </div>
+        <div className="max-h-[70vh] overflow-y-auto pr-2">
+          <form onSubmit={handleSubmit}>
+            {/* Item Name */}
+            <div className="mb-4">
+              <label className="block mb-2">Item Name</label>
+              <input
+                type="text"
+                ref={nameRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="Pizza Name"
+                required
+              />
+            </div>
 
-          {/* Item Description */}
-          <div className="mb-4">
-            <label className="block mb-2">Description</label>
-            <textarea
-              ref={descriptionRef}
-              className="w-full px-3 py-2 border rounded-md"
-              style={{
-                backgroundColor: "var(--background)",
-                color: "var(--foreground)",
-                borderColor: "var(--card-text)",
-              }}
-              placeholder="Describe the item"
-              rows="3"
-              required
-            ></textarea>
-          </div>
+            {/* Item Description */}
+            <div className="mb-4">
+              <label className="block mb-2">Description</label>
+              <textarea
+                ref={descriptionRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="Describe the item"
+                rows="3"
+                required
+              ></textarea>
+            </div>
 
-          {/* Item Price */}
-          <div className="mb-4">
-            <label className="block mb-2">Price ($)</label>
-            <input
-              type="number"
-              ref={priceRef}
-              className="w-full px-3 py-2 border rounded-md"
-              style={{
-                backgroundColor: "var(--background)",
-                color: "var(--foreground)",
-                borderColor: "var(--card-text)",
-              }}
-              placeholder="9.99"
-              step="0.01"
-              min="0"
-              required
-            />
-          </div>
+            {/* Item Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Price ($)</label>
+              <input
+                type="number"
+                ref={priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+                required
+              />
+            </div>
 
-          {/* Item Image */}
-          <div className="mb-6">
-            <label className="block mb-2">Image</label>
-            <input
-              type="file"
-              ref={imageRef}
-              className="w-full px-3 py-2 border rounded-md"
-              style={{
-                backgroundColor: "var(--background)",
-                color: "var(--foreground)",
-                borderColor: "var(--card-text)",
-              }}
-              accept="image/*"
-              required
-            />
-          </div>
+            {/* Item Size */}
+            <div className="mb-4">
+              <label className="block mb-2">Size</label>
+              <select
+                ref={sizeRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                required
+              >
+                <option value="">Select Size</option>
+                <option value="Small">Small</option>
+                <option value="Medium">Medium</option>
+                <option value="Large">Large</option>
+              </select>
+            </div>
 
-          {/* Form Actions */}
-          <div className="flex justify-end space-x-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 border rounded-md"
-              style={{
-                borderColor: "var(--card-text)",
-                color: "var(--card-text)",
-              }}
-              disabled={isLoading}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-md bg-[var(--accent)] text-white"
-              disabled={isLoading}
-            >
-              {isLoading ? "Adding..." : "Add Item"}
-            </button>
-          </div>
-        </form>
+            {/* Item Category */}
+            <div className="mb-4">
+              <label className="block mb-2">Category</label>
+              <select
+                ref={categoryRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                required
+              >
+                <option value="">Select Category</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Appetizers">Appetizers</option>
+                <option value="Sandwiches">Sandwiches</option>
+                <option value="Drinks">Drinks</option>
+              </select>
+            </div>
+
+            {/* Item Image */}
+            <div className="mb-6">
+              <label className="block mb-2">Image</label>
+              <input
+                type="file"
+                ref={imageRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                accept="image/*"
+                required
+              />
+            </div>
+
+            {/* Form Actions */}
+            <div className="flex justify-end space-x-2 mt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-4 py-2 border rounded-md"
+                style={{
+                  borderColor: "var(--card-text)",
+                  color: "var(--card-text)",
+                }}
+                disabled={isLoading}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 rounded-md bg-[var(--accent)] text-white"
+                disabled={isLoading}
+              >
+                {isLoading ? "Adding..." : "Add Item"}
+              </button>
+            </div>
+          </form>
+        </div>
 
         {/* Notification popup */}
         {notification.show && (
