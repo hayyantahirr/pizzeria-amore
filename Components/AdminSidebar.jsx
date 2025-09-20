@@ -86,7 +86,7 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('dashboard')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center p-3 rounded-md transition-colors cursor-pointer ${
                   activeComponent === 'dashboard' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
                 style={{
@@ -101,7 +101,7 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('menu')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center p-3 rounded-md transition-colors cursor-pointer ${
                   activeComponent === 'menu' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
                 style={{
@@ -116,7 +116,7 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li>
               <button
                 onClick={() => setActiveComponent('orders')}
-                className={`w-full flex items-center p-3 rounded-md transition-colors ${
+                className={`w-full flex items-center p-3 rounded-md transition-colors cursor-pointer ${
                   activeComponent === 'orders' ? '' : 'hover:bg-white hover:bg-opacity-10'
                 }`}
                 style={{
@@ -131,7 +131,7 @@ const AdminSidebar = ({ showSidebar, setShowSidebar, setActiveComponent, activeC
             <li className="mt-auto pt-6">
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center p-3 text-red-500 hover:bg-red-50 rounded-md"
+                className="w-full flex items-center p-3 text-red-500 hover:bg-red-50 rounded-md cursor-pointer"
               >
                 <FaSignOutAlt className="mr-3" />
                 <span>Sign Out</span>

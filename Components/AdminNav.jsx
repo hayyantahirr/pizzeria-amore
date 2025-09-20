@@ -46,11 +46,12 @@ const AdminNav = ({ toggleSidebar }) => {
 
     fetchUser();
   }, []);
+  
 
   return (
     <nav
       className="shadow-sm p-4"
-      style={{ backgroundColor: 'var(--nav-bg)', color: 'var(--nav-text)' }}
+      style={{ backgroundColor: "var(--nav-bg)", color: "var(--nav-text)" }}
     >
       <div className="flex items-center justify-between">
         {/* Logo and Menu Icon */}
@@ -59,7 +60,7 @@ const AdminNav = ({ toggleSidebar }) => {
             onClick={toggleSidebar}
             className="hover:opacity-75 focus:outline-none"
             aria-label="Toggle Sidebar"
-            style={{ color: 'var(--nav-text)' }}
+            style={{ color: "var(--nav-text)" }}
           >
             <FaBars size={20} />
           </button>
@@ -73,7 +74,7 @@ const AdminNav = ({ toggleSidebar }) => {
             />
             <span
               className="text-xl font-bold hidden sm:inline"
-              style={{ color: 'var(--nav-text)' }}
+              style={{ color: "var(--nav-text)" }}
             >
               Pizzeria Amore
             </span>
@@ -88,17 +89,19 @@ const AdminNav = ({ toggleSidebar }) => {
               placeholder="Search..."
               className="w-full max-w-md pl-10 pr-4 py-2 rounded-lg border focus:outline-none"
               style={{
-                backgroundColor: 'var(--background)',
-                color: 'var(--foreground)',
-                borderColor: 'var(--nav-text)',
-                '--ring-color': 'var(--accent)',
+                backgroundColor: "var(--background)",
+                color: "var(--foreground)",
+                borderColor: "var(--nav-text)",
+                "--ring-color": "var(--accent)",
               }}
-              onFocus={(e) => e.target.style.boxShadow = `0 0 0 2px var(--ring-color)`}
-              onBlur={(e) => e.target.style.boxShadow = 'none'}
+              onFocus={(e) =>
+                (e.target.style.boxShadow = `0 0 0 2px var(--ring-color)`)
+              }
+              onBlur={(e) => (e.target.style.boxShadow = "none")}
             />
             <FaSearch
               className="absolute left-3 top-3"
-              style={{ color: 'var(--nav-text)' }}
+              style={{ color: "var(--nav-text)" }}
             />
           </div>
         </div>
@@ -121,7 +124,7 @@ const AdminNav = ({ toggleSidebar }) => {
               </div>
               <span
                 className="hidden md:inline text-sm font-medium"
-                style={{ color: 'var(--nav-text)' }}
+                style={{ color: "var(--nav-text)" }}
               >
                 {user.name}
               </span>
