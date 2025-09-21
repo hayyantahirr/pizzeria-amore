@@ -20,7 +20,11 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
   const descriptionRef = useRef(null);
   const priceRef = useRef(null);
   const imageRef = useRef(null);
-
+  const xs_priceRef = useRef(null);
+  const sm_priceRef = useRef(null);
+  const md_priceRef = useRef(null);
+  const l_priceRef = useRef(null);
+  const xl_priceRef = useRef(null);
   const categoryRef = useRef(null);
 
   // Ref for the modal to detect outside clicks
@@ -81,8 +85,13 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
         !nameRef.current ||
         !descriptionRef.current ||
         !priceRef.current ||
+        !xs_priceRef.current ||
+        !sm_priceRef.current ||
+        !md_priceRef.current ||
+        !l_priceRef.current ||
+        !xl_priceRef.current ||
         !imageRef.current ||
-        !categoryRef.current
+        !categoryRef.current 
       ) {
         setNotification({
           show: true,
@@ -97,12 +106,17 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
       const name = nameRef.current.value;
       const description = descriptionRef.current.value;
       const price = parseFloat(priceRef.current.value);
+      const xs_price = parseFloat(xs_priceRef.current.value);
+      const sm_price = parseFloat(sm_priceRef.current.value);
+      const md_price = parseFloat(md_priceRef.current.value);
+      const l_price = parseFloat(l_priceRef.current.value);
+      const xl_price = parseFloat(xl_priceRef.current.value);
       const imageFile = imageRef.current.files[0];
 
       const category = categoryRef.current.value;
 
       // Validate inputs
-      if (!name || !description || !price || !imageFile || !category) {
+      if (!name || !description || !imageFile || !category) {
         setNotification({
           show: true,
           message: "Please fill all fields",
@@ -121,7 +135,11 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
         description,
         price,
         imageUrl,
-
+        xs_price,
+        sm_price,
+        md_price,
+        l_price,
+        xl_price,
         category,
       });
 
@@ -184,7 +202,6 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             {/* Item Description */}
             <div className="mb-4">
               <label className="block mb-2">Description</label>
@@ -201,7 +218,6 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 required
               ></textarea>
             </div>
-
             {/* Item Price */}
             <div className="mb-4">
               <label className="block mb-2">Price ($)</label>
@@ -220,7 +236,93 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
+            {/* Item xs Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Xs Price ($)</label>
+              <input
+                type="number"
+                ref={xs_priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+              />
+            </div>{" "}
+            {/* Item sm Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Sm Price ($)</label>
+              <input
+                type="number"
+                ref={sm_priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+                
+              />
+            </div>{" "}
+            {/* Item md Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Md Price ($)</label>
+              <input
+                type="number"
+                ref={md_priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+                
+              />
+            </div>{" "}
+            {/* Item Large Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Lg Price ($)</label>
+              <input
+                type="number"
+                ref={l_priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+              />
+            </div>
+            {/* Item Large Price */}
+            <div className="mb-4">
+              <label className="block mb-2">Lg Price ($)</label>
+              <input
+                type="number"
+                ref={l_priceRef}
+                className="w-full px-3 py-2 border rounded-md"
+                style={{
+                  backgroundColor: "var(--background)",
+                  color: "var(--foreground)",
+                  borderColor: "var(--card-text)",
+                }}
+                placeholder="9.99"
+                step="0.01"
+                min="0"
+              />
+            </div>
             {/* Item Category */}
             <div className="mb-4">
               <label className="block mb-2">Category</label>
@@ -241,7 +343,6 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 <option value="Drinks">Drinks</option>
               </select>
             </div>
-
             {/* Item Image */}
             <div className="mb-6">
               <label className="block mb-2">Image</label>
@@ -258,7 +359,6 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
             {/* Form Actions */}
             <div className="flex justify-end space-x-2 mt-4">
               <button

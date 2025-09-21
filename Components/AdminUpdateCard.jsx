@@ -8,6 +8,11 @@ const AdminUpdateCard = ({ product, isOpen, onClose, onProductUpdated }) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
+    xs_price: "",
+    sm_price: "",
+    md_price: "",
+    l_price: "",
+    xl_price: "",
     category: "",
     description: "",
     image_url: "",
@@ -23,6 +28,11 @@ const AdminUpdateCard = ({ product, isOpen, onClose, onProductUpdated }) => {
       setFormData({
         name: product.name || "",
         price: product.price || "",
+        xs_price: product.xs_price || "",
+        sm_price: product.sm_price || "",
+        md_price: product.md_price || "",
+        l_price: product.l_price || "",
+        xl_price: product.xl_price || "",
         category: product.category || "",
         description: product.description || "",
         image_url: product.image_url || "",
@@ -92,8 +102,13 @@ const AdminUpdateCard = ({ product, isOpen, onClose, onProductUpdated }) => {
         .update({
           item_name: formData.name,
           item_price: formData.price,
+          item_xs_price: formData.xs_price,
+          item_sm_price: formData.sm_price,
+          item_md_price: formData.md_price,
+          item_l_price: formData.l_price,
+          item_xl_price: formData.xl_price,
           item_category: formData.category,
-          item_description: formData.description,
+          item_desc: formData.description,
           item_pic: imageUrl,
         })
         .eq("id", product.id);
@@ -193,7 +208,96 @@ const AdminUpdateCard = ({ product, isOpen, onClose, onProductUpdated }) => {
                   required
                 />
               </div>
-
+              <div className="mb-4">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  XS Price
+                </label>
+                <input
+                  type="number"
+                  name="xs_price"
+                  value={formData.xs_price}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  style={{
+                    backgroundColor: "var(--background)",
+                    color: "var(--foreground)",
+                    borderColor: "var(--card-text)",
+                  }}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  Sm Price
+                </label>
+                <input
+                  type="number"
+                  name="sm_price"
+                  value={formData.sm_price}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  style={{
+                    backgroundColor: "var(--background)",
+                    color: "var(--foreground)",
+                    borderColor: "var(--card-text)",
+                  }}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  md Price
+                </label>
+                <input
+                  type="number"
+                  name="md_price"
+                  value={formData.md_price}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  style={{
+                    backgroundColor: "var(--background)",
+                    color: "var(--foreground)",
+                    borderColor: "var(--card-text)",
+                  }}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  l Price
+                </label>
+                <input
+                  type="number"
+                  name="l_price"
+                  value={formData.l_price}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  style={{
+                    backgroundColor: "var(--background)",
+                    color: "var(--foreground)",
+                    borderColor: "var(--card-text)",
+                  }}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">
+                  xl Price
+                </label>
+                <input
+                  type="number"
+                  name="xl_price"
+                  value={formData.xl_price}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                  style={{
+                    backgroundColor: "var(--background)",
+                    color: "var(--foreground)",
+                    borderColor: "var(--card-text)",
+                  }}
+                  required
+                />
+              </div>
               <div className="mb-4">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">
                   Category
