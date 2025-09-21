@@ -38,7 +38,7 @@ async function Page() {
       <div className="products-container bg-white mt-15">
         {/* Product Heading Section */}
         <div className={`${styles["product-heading"]} relative`}>
-          <div className="bg-white w-full h-[300px]"></div>
+          
           <div
             className={`${styles["coffee-beans-bg-1"]} opacity-40 absolute top-20 left-10 hidden md:block`}
           ></div>
@@ -61,7 +61,7 @@ async function Page() {
 
           <div className="absolute top-10 left-10 hidden md:block">
             <div className="mask-group">
-              <div className={styles["coffee-image"]}></div>
+              
             </div>
           </div>
 
