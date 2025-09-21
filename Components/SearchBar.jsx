@@ -72,7 +72,7 @@ const SearchBar = () => {
   return (
     <>
       {" "}
-      <div className="search-bar absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 flex items-center w-[90%] md:w-auto  z-[99999]">
+      <div className="search-bar absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 flex items-center w-[90%] md:w-auto  z-50">
         <div className="search-icon-container bg-[#5E3D1C] p-2 md:p-3 rounded-l-lg">
           <svg
             width="20"

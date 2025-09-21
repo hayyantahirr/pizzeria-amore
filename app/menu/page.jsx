@@ -5,6 +5,8 @@ import Image from "next/image";
 import styles from "./menu.module.css";
 import { createClient } from "@/lib/supabaseServer";
 import SearchBar from "@/Components/SearchBar";
+import CartModalWrapper from "@/Components/CartModalWrapper";
+import AddToCartButton from "@/Components/AddToCartButton";
 
 // This is a Server Component
 async function Page() {
@@ -104,9 +106,7 @@ async function Page() {
                           <span className="text-[#5E3D1C] font-bold text-sm md:text-base">
                             Rs. {product.item_price}
                           </span>
-                          <button className="bg-[#5E3D1C] text-white px-2 py-1 md:px-4 md:py-2 rounded-lg hover:bg-[#4a3016] transition-colors text-xs md:text-sm">
-                            Add to Cart
-                          </button>
+                          <AddToCartButton product={product} />
                         </div>
                       </div>
                     </div>
@@ -128,6 +128,9 @@ async function Page() {
           <Footer />
         </div>
       </div>
+      
+      {/* Cart Modal */}
+      <CartModalWrapper />
     </div>
   );
 }
