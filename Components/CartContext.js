@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 // Create a context for cart management
 const CartContext = createContext();
@@ -9,10 +9,10 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   // State to hold the selected product for the modal
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
+
   // State to control modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // State to hold cart items
   const [cartItems, setCartItems] = useState([]);
 
@@ -32,32 +32,36 @@ export const CartProvider = ({ children }) => {
   };
 
   // Function to add an item to the cart
-  const addToCart = (product, quantity = 1) => {
-    setCartItems(prevItems => {
-      // Check if the item is already in the cart
-      const existingItemIndex = prevItems.findIndex(item => item.id === product.id);
-      
+  const addToCart = (product, quantity = 1, size = "Medium") => {
+    setCartItems((prevItems) => {
+      // Check if the item is already in the cart with the same size
+      const existingItemIndex = prevItems.findIndex(
+        (item) => item.id === product.id && item.size === size
+      );
+
       if (existingItemIndex >= 0) {
-        // If item exists, update its quantity
+        // If item exists with same size, update its quantity
         const updatedItems = [...prevItems];
         updatedItems[existingItemIndex] = {
           ...updatedItems[existingItemIndex],
-          quantity: updatedItems[existingItemIndex].quantity + quantity
+          quantity: updatedItems[existingItemIndex].quantity + quantity,
         };
         return updatedItems;
       } else {
-        // If item doesn't exist, add it with the specified quantity
-        return [...prevItems, { ...product, quantity }];
+        // If item doesn't exist with this size, add it with the specified quantity and size
+        return [...prevItems, { ...product, quantity, size }];
       }
     });
-    
+
     // Close the modal after adding to cart
     closeModal();
   };
 
   // Function to remove an item from the cart
   const removeFromCart = (productId) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== productId)
+    );
   };
 
   // Function to update the quantity of an item in the cart
@@ -66,9 +70,9 @@ export const CartProvider = ({ children }) => {
       removeFromCart(productId);
       return;
     }
-    
-    setCartItems(prevItems => 
-      prevItems.map(item => 
+
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
         item.id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
@@ -76,24 +80,29 @@ export const CartProvider = ({ children }) => {
 
   // Calculate the total number of items in the cart
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  
+
   // Calculate the total price of items in the cart
-  const cartTotal = cartItems.reduce((total, item) => total + (item.item_price * item.quantity), 0);
+  const cartTotal = cartItems.reduce(
+    (total, item) => total + item.item_price * item.quantity,
+    0
+  );
 
   // Provide the cart state and functions to children components
   return (
-    <CartContext.Provider value={{ 
-      selectedProduct,
-      isModalOpen,
-      cartItems,
-      cartCount,
-      cartTotal,
-      openModal,
-      closeModal,
-      addToCart,
-      removeFromCart,
-      updateQuantity
-    }}>
+    <CartContext.Provider
+      value={{
+        selectedProduct,
+        isModalOpen,
+        cartItems,
+        cartCount,
+        cartTotal,
+        openModal,
+        closeModal,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
