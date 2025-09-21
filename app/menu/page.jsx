@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "./menu.module.css";
 import { createClient } from "@/lib/supabaseServer";
+import SearchBar from "@/Components/SearchBar";
 
 // This is a Server Component
 async function Page() {
@@ -50,7 +51,7 @@ async function Page() {
 
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-4">
             <h1 className="text-4xl md:text-5xl font-bold text-[#5E3D1C] mb-2 md:mb-4">
-              Our Menu
+              Order Now
             </h1>
             <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
               Explore our delicious selection of pizzas, appetizers, drinks, and
@@ -65,40 +66,7 @@ async function Page() {
           </div>
 
           {/* Search Bar */}
-          <div className="search-bar absolute bottom-[-25px] left-1/2 transform -translate-x-1/2 flex items-center w-[90%] md:w-auto">
-            <div className="search-icon-container bg-[#5E3D1C] p-2 md:p-3 rounded-l-lg">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="md:w-6 md:h-6"
-              >
-                <path
-                  d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21 21L16.65 16.65"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-            <div className="search-input-container flex-1">
-              <input
-                type="text"
-                placeholder="Search Products"
-                className="py-2 md:py-3 px-3 md:px-4 w-full md:w-[300px] border border-gray-300 rounded-r-lg focus:outline-none text-sm md:text-base"
-              />
-            </div>
-          </div>
+          <SearchBar />
         </div>
 
         {/* Products Section */}
@@ -124,7 +92,6 @@ async function Page() {
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover"
                         />
-                        
                       </div>
                       <div className="product-info p-3 md:p-4">
                         <h3 className="text-base md:text-lg font-semibold text-[#5E3D1C]">
