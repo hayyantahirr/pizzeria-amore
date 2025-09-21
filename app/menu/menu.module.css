@@ -1,0 +1,39 @@
+.coffee-beans-bg-1 {
+  background-image: url("/extra's/watermark.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 350px;
+  height: 350px;
+}
+
+.coffee-beans-bg-2 {
+  background-image: url("/extra's/watermark.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 350px;
+  height: 350px;
+  transform: rotate(90deg);
+}
+
+.coffee-beans-bg-3 {
+  background-image: url("/extra's/watermark.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 350px;
+  height: 350px;
+  transform: rotate(180deg);
+}
+
+.coffee-image {
+  background-image: url("/extra's/coffee beans bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.product-heading {
+  height: 400px;
+  margin-bottom: 50px;
+}
