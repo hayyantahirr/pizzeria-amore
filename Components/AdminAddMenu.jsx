@@ -20,7 +20,7 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
   const descriptionRef = useRef(null);
   const priceRef = useRef(null);
   const imageRef = useRef(null);
-  const sizeRef = useRef(null);
+
   const categoryRef = useRef(null);
 
   // Ref for the modal to detect outside clicks
@@ -76,16 +76,33 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     try {
+      // Check if refs are valid before accessing their values
+      if (
+        !nameRef.current ||
+        !descriptionRef.current ||
+        !priceRef.current ||
+        !imageRef.current ||
+        !categoryRef.current
+      ) {
+        setNotification({
+          show: true,
+          message: "Form initialization error. Please try again.",
+          type: "error",
+        });
+        setIsLoading(false);
+        return;
+      }
+
       // Get values from refs
       const name = nameRef.current.value;
       const description = descriptionRef.current.value;
       const price = parseFloat(priceRef.current.value);
       const imageFile = imageRef.current.files[0];
-      const size = sizeRef.current.value;
+
       const category = categoryRef.current.value;
 
       // Validate inputs
-      if (!name || !description || !price || !imageFile || !size || !category) {
+      if (!name || !description || !price || !imageFile || !category) {
         setNotification({
           show: true,
           message: "Please fill all fields",
@@ -104,7 +121,7 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
         description,
         price,
         imageUrl,
-        size,
+
         category,
       });
 
@@ -203,8 +220,6 @@ const AdminAddMenu = ({ isOpen, onClose }) => {
                 required
               />
             </div>
-
-           
 
             {/* Item Category */}
             <div className="mb-4">
