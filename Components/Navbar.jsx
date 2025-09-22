@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import Login from "./login";
-import Register from "./register";
+
 import { supabase } from "@/lib/supabaseClient";
 
 const navLinks = [
@@ -12,7 +11,7 @@ const navLinks = [
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contacts" },
   { name: "Order Now", href: "/menu" },
-  { name: "Login/Register" },
+  
 ];
 
 const Navbar = () => {
@@ -20,23 +19,9 @@ const Navbar = () => {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const pathname = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const getSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setIsAuthenticated(!!data.session);
-    };
-    getSession();
-    const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setIsAuthenticated(!!session);
-      }
-    );
-    return () => {
-      subscription.subscription?.unsubscribe?.();
-    };
-  }, []);
+
+  
 
   return (
     <>
@@ -101,29 +86,7 @@ const Navbar = () => {
                   link.href &&
                   (pathname === link.href ||
                     (link.href === "/" && pathname === "/"));
-                if (link.name === "Login/Register") {
-                  return isAuthenticated ? (
-                    <button
-                      key="Logout"
-                      type="button"
-                      onClick={async () => {
-                        await supabase.auth.signOut();
-                      }}
-                      className="text-sm font-semibold transition-colors duration-200 px-7 text-gray-800 hover:text-[#DE6868]"
-                    >
-                      Logout
-                    </button>
-                  ) : (
-                    <button
-                      key={link.name}
-                      type="button"
-                      onClick={() => setLoginOpen(true)}
-                      className="text-sm font-semibold transition-colors duration-200 px-7 text-gray-800 hover:text-[#DE6868]"
-                    >
-                      {link.name}
-                    </button>
-                  );
-                }
+               
                 return (
                   <a
                     key={link.name}
@@ -196,22 +159,8 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-      <Login
-        isOpen={loginOpen}
-        onClose={() => setLoginOpen(false)}
-        onSwitch={() => {
-          setLoginOpen(false);
-          setRegisterOpen(true);
-        }}
-      />
-      <Register
-        isOpen={registerOpen}
-        onClose={() => setRegisterOpen(false)}
-        onSwitch={() => {
-          setRegisterOpen(false);
-          setLoginOpen(true);
-        }}
-      />
+     
+      
     </>
   );
 };

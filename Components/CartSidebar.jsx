@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import { useCart } from "./CartContext";
 import Image from "next/image";
+import Link from "next/link";
 
 const CartSidebar = () => {
   const {
@@ -262,9 +263,11 @@ const CartSidebar = () => {
                 <span className="dark:text-white">Rs. {finalTotal}</span>
               </div>
 
-              <button className="w-full py-2 mt-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
-                Proceed to Checkout
-              </button>
+              <Link href="/checkout">
+                <button className="w-full py-2 mt-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                  Proceed to Checkout
+                </button>
+              </Link>
             </div>
           </div>
         )}
