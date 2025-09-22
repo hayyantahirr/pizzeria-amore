@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 // Create a context for cart management
 const CartContext = createContext();
@@ -9,12 +9,32 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   // State to hold the selected product for the modal
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  
   // State to control modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
+  // State to control sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   // State to hold cart items
   const [cartItems, setCartItems] = useState([]);
+
+  // Load cart from localStorage on initial render
+  useEffect(() => {
+    const savedCart = localStorage.getItem('pizzeriaAmoreCart');
+    if (savedCart) {
+      try {
+        setCartItems(JSON.parse(savedCart));
+      } catch (error) {
+        console.error('Failed to parse cart from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('pizzeriaAmoreCart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
   // Function to open the modal with a product
   const openModal = (product) => {
@@ -31,6 +51,11 @@ export const CartProvider = ({ children }) => {
     }, 300);
   };
 
+  // Function to toggle sidebar
+  const toggleSidebar = () => {
+    setIsSidebarOpen(prev => !prev);
+  };
+
   // Function to add an item to the cart
   const addToCart = (product, quantity = 1, size = "Medium") => {
     setCartItems((prevItems) => {
@@ -38,7 +63,7 @@ export const CartProvider = ({ children }) => {
       const existingItemIndex = prevItems.findIndex(
         (item) => item.id === product.id && item.size === size
       );
-
+      
       if (existingItemIndex >= 0) {
         // If item exists with same size, update its quantity
         const updatedItems = [...prevItems];
@@ -52,40 +77,82 @@ export const CartProvider = ({ children }) => {
         return [...prevItems, { ...product, quantity, size }];
       }
     });
-
-    // Close the modal after adding to cart
-    closeModal();
   };
 
   // Function to remove an item from the cart
-  const removeFromCart = (productId) => {
+  const removeFromCart = (productId, size) => {
     setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
+      prevItems.filter((item) => !(item.id === productId && item.size === size))
     );
   };
 
   // Function to update the quantity of an item in the cart
-  const updateQuantity = (productId, newQuantity) => {
+  const updateQuantity = (productId, size, newQuantity) => {
     if (newQuantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productId, size);
       return;
     }
 
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
+        item.id === productId && item.size === size 
+          ? { ...item, quantity: newQuantity } 
+          : item
       )
     );
   };
 
   // Calculate the total number of items in the cart
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-
+  
   // Calculate the total price of items in the cart
   const cartTotal = cartItems.reduce(
-    (total, item) => total + item.item_price * item.quantity,
+    (total, item) => {
+      // Get the price based on size
+      let price = item.item_price;
+      if (item.size === "Extra Small" && item.item_xs_price) {
+        price = item.item_xs_price;
+      } else if (item.size === "Small" && item.item_sm_price) {
+        price = item.item_sm_price;
+      } else if (item.size === "Medium" && item.item_md_price) {
+        price = item.item_md_price;
+      } else if (item.size === "Large" && item.item_l_price) {
+        price = item.item_l_price;
+      } else if (item.size === "Extra Large" && item.item_xl_price) {
+        price = item.item_xl_price;
+      } else {
+        // Apply multiplier if specific price not available
+        const multipliers = {
+          "Extra Small": 0.7,
+          "Small": 0.85,
+          "Medium": 1,
+          "Large": 1.2,
+          "Extra Large": 1.4
+        };
+        price = Math.round(item.item_price * multipliers[item.size]);
+      }
+      
+      return total + price * item.quantity;
+    },
     0
   );
+  
+  // Calculate tax (10% of subtotal)
+  const taxAmount = Math.round(cartTotal * 0.10);
+  
+  // Calculate final total with tax
+  const finalTotal = cartTotal + taxAmount;
+
+  // Check if a product is in the cart
+  const isInCart = (productId, size) => {
+    return cartItems.some(item => item.id === productId && item.size === size);
+  };
+
+  // Get quantity of a product in cart
+  const getCartItemQuantity = (productId, size) => {
+    const item = cartItems.find(item => item.id === productId && item.size === size);
+    return item ? item.quantity : 0;
+  };
 
   // Provide the cart state and functions to children components
   return (
@@ -93,20 +160,34 @@ export const CartProvider = ({ children }) => {
       value={{
         selectedProduct,
         isModalOpen,
+        isSidebarOpen,
         cartItems,
         cartCount,
         cartTotal,
+        taxAmount,
+        finalTotal,
         openModal,
         closeModal,
+        toggleSidebar,
         addToCart,
         removeFromCart,
         updateQuantity,
+        isInCart,
+        getCartItemQuantity
       }}
     >
       {children}
     </CartContext.Provider>
   );
 };
+        
+  
 
 // Custom hook to use the cart context in components
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+};

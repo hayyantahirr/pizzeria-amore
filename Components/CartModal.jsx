@@ -5,7 +5,16 @@ import Image from "next/image";
 import { useCart } from "./CartContext";
 
 const CartModal = () => {
-  const { selectedProduct, isModalOpen, closeModal, addToCart } = useCart();
+  const { 
+    selectedProduct, 
+    isModalOpen, 
+    closeModal, 
+    addToCart, 
+    isInCart, 
+    getCartItemQuantity,
+    updateQuantity,
+    removeFromCart 
+  } = useCart();
   const modalRef = useRef(null);
   const [selectedSize, setSelectedSize] = useState("Medium");
 
@@ -138,19 +147,61 @@ const CartModal = () => {
           <div className="flex justify-between items-center mt-4">
             <span className="text-[#5E3D1C] font-bold text-xl">
               Rs.{" "}
-              {Math.round(
-                selectedProduct.item_price *
-                  sizeOptions.find((option) => option.name === selectedSize)
-                    .multiplier
-              )}
+              {selectedProduct[`item_${selectedSize.toLowerCase().replace(/\s+/g, '_')}_price`] || 
+                Math.round(
+                  selectedProduct.item_price *
+                    sizeOptions.find((option) => option.name === selectedSize)
+                      .multiplier
+                )
+              }
             </span>
 
-            <button
-              onClick={() => addToCart(selectedProduct, 1, selectedSize)}
-              className="bg-[#5E3D1C] text-white px-6 py-2 rounded-lg hover:bg-[#4a3016] transition-colors"
-            >
-              Add to Cart
-            </button>
+            {isInCart(selectedProduct.id, selectedSize) ? (
+              <div className="flex items-center space-x-2">
+                {getCartItemQuantity(selectedProduct.id, selectedSize) === 1 ? (
+                  <button
+                    onClick={() => removeFromCart(selectedProduct.id, selectedSize)}
+                    className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
+                    aria-label="Remove from cart"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => updateQuantity(selectedProduct.id, selectedSize, getCartItemQuantity(selectedProduct.id, selectedSize) - 1)}
+                    className="bg-[#5E3D1C] text-white p-2 rounded-full hover:bg-[#4a3016] transition-colors"
+                    aria-label="Decrease quantity"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                )}
+                
+                <span className="text-lg font-medium w-8 text-center">
+                  {getCartItemQuantity(selectedProduct.id, selectedSize)}
+                </span>
+                
+                <button
+                  onClick={() => updateQuantity(selectedProduct.id, selectedSize, getCartItemQuantity(selectedProduct.id, selectedSize) + 1)}
+                  className="bg-[#5E3D1C] text-white p-2 rounded-full hover:bg-[#4a3016] transition-colors"
+                  aria-label="Increase quantity"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => addToCart(selectedProduct, 1, selectedSize)}
+                className="bg-[#5E3D1C] text-white px-6 py-2 rounded-lg hover:bg-[#4a3016] transition-colors"
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         </div>
       </div>
