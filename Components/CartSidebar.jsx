@@ -155,7 +155,7 @@ const CartSidebar = () => {
                         Size: {item.size}
                       </p>
                       <p className="text-sm font-medium dark:text-white">
-                        Rs{price}
+                        Rs. {price}
                       </p>
                     </div>
 
@@ -246,7 +246,7 @@ const CartSidebar = () => {
                   Subtotal
                 </span>
                 <span className="font-medium dark:text-white">
-                  Rs{cartTotal}
+                  Rs. {cartTotal}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -254,12 +254,12 @@ const CartSidebar = () => {
                   Tax (10%)
                 </span>
                 <span className="font-medium dark:text-white">
-                  RS{taxAmount}
+                  Rs. {taxAmount}
                 </span>
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span className="dark:text-white">Total</span>
-                <span className="dark:text-white">Rs{finalTotal}</span>
+                <span className="dark:text-white">Rs. {finalTotal}</span>
               </div>
 
               <button className="w-full py-2 mt-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
