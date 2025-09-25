@@ -3,21 +3,30 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useCart } from "@/Components/CartContext";
 
 export default function OrderSuccessPage() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { clearCart } = useCart();
 
   useEffect(() => {
+    // Load order details from localStorage when the component mounts
     if (orderId) {
       const savedOrders = JSON.parse(
         localStorage.getItem("pizzeriaAmoreOrders") || "[]"
       );
       const currentOrder = savedOrders.find((o) => o.id === orderId);
       setOrder(currentOrder);
+
+      // Clear the cart only after the order is successfully loaded
+      if (currentOrder) {
+        clearCart();
+      }
     }
+
     setLoading(false);
   }, [orderId]);
 

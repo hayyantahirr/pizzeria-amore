@@ -6,6 +6,7 @@ import { useCart } from "./CartContext";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
+
 export default function CheckoutForm({ finalTotal }) {
   const router = useRouter();
   const { cartItems, clearCart } = useCart();
@@ -126,9 +127,8 @@ export default function CheckoutForm({ finalTotal }) {
       savedOrders.push(order);
       localStorage.setItem("pizzeriaAmoreOrders", JSON.stringify(savedOrders));
 
-      // Redirect to the success page first, then clear the cart
+      // Redirect to the success page with the new order ID
       router.push(`/checkout/success?orderId=${orderId}`);
-      clearCart();
     } catch (error) {
       // Log and display any errors that occur during submission
       console.error("Error placing order:", error);
