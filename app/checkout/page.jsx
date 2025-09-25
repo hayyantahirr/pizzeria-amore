@@ -1,11 +1,11 @@
 "use client";
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
-import Navbar from '@/Components/Navbar';
-import Footer from '@/Components/Footer';
-import { useCart } from '@/Components/CartContext';
-import CheckoutForm from '@/Components/CheckoutForm';
+import React from "react";
+import { useRouter } from "next/navigation";
+import Navbar from "@/Components/Navbar";
+import Footer from "@/Components/Footer";
+import { useCart } from "@/Components/CartContext";
+import CheckoutForm from "@/Components/CheckoutForm";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -14,36 +14,45 @@ export default function CheckoutPage() {
   // Redirect to menu if cart is empty
   React.useEffect(() => {
     if (cartItems.length === 0) {
-      router.push('/menu');
+      router.push("/menu");
     }
   }, [cartItems, router]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col ">
       <Navbar />
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
+
+      <main className="flex-grow container mx-auto px-4 py-8 mt-15">
         <h1 className="text-3xl font-bold text-[#5E3D1C] mb-8">Checkout</h1>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Order Summary */}
           <div className="lg:col-span-1 order-2 lg:order-1">
             <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
-              <h2 className="text-xl font-semibold text-[#5E3D1C] mb-4">Order Summary</h2>
-              
+              <h2 className="text-xl font-semibold text-[#5E3D1C] mb-4">
+                Order Summary
+              </h2>
+
               <div className="space-y-4 mb-6">
                 {cartItems.map((item) => (
-                  <div key={`${item.id}-${item.size}`} className="flex justify-between border-b pb-2">
+                  <div
+                    key={`${item.id}-${item.size}`}
+                    className="flex justify-between border-b pb-2"
+                  >
                     <div>
                       <p className="font-medium">{item.item_name}</p>
                       <p className="text-sm text-gray-600">Size: {item.size}</p>
-                      <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                      <p className="text-sm text-gray-600">
+                        Qty: {item.quantity}
+                      </p>
                     </div>
-                    <p className="font-medium">Rs. {item.item_price * item.quantity}</p>
+                    <p className="font-medium">
+                      Rs. {item.item_price * item.quantity}
+                    </p>
                   </div>
                 ))}
               </div>
-              
+
               <div className="space-y-2 border-t pt-4">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
@@ -60,14 +69,14 @@ export default function CheckoutPage() {
               </div>
             </div>
           </div>
-          
+
           {/* Checkout Form */}
           <div className="lg:col-span-2 order-1 lg:order-2">
-            <CheckoutForm />
+            <CheckoutForm cartItems={cartItems} finalTotal={finalTotal} />
           </div>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

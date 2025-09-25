@@ -11,7 +11,6 @@ const navLinks = [
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contacts" },
   { name: "Order Now", href: "/menu" },
-  
 ];
 
 const Navbar = () => {
@@ -19,9 +18,6 @@ const Navbar = () => {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const pathname = usePathname();
-
-
-  
 
   return (
     <>
@@ -86,7 +82,7 @@ const Navbar = () => {
                   link.href &&
                   (pathname === link.href ||
                     (link.href === "/" && pathname === "/"));
-               
+
                 return (
                   <a
                     key={link.name}
@@ -159,8 +155,6 @@ const Navbar = () => {
           </div>
         )}
       </nav>
-     
-      
     </>
   );
 };

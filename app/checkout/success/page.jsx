@@ -1,114 +1,123 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Navbar from '@/Components/Navbar';
-import Footer from '@/Components/Footer';
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export default function OrderSuccessPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState(null);
-  
-  const orderId = searchParams.get('orderId');
-  
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    if (!orderId) {
-      router.push('/menu');
-      return;
+    if (orderId) {
+      const savedOrders = JSON.parse(
+        localStorage.getItem("pizzeriaAmoreOrders") || "[]"
+      );
+      const currentOrder = savedOrders.find((o) => o.id === orderId);
+      setOrder(currentOrder);
     }
-    
-    // Get order details from localStorage
-    const savedOrders = JSON.parse(localStorage.getItem('pizzeriaAmoreOrders') || '[]');
-    const foundOrder = savedOrders.find(o => o.id === orderId);
-    
-    if (foundOrder) {
-      setOrder(foundOrder);
-    } else {
-      router.push('/menu');
-    }
-  }, [orderId, router]);
-  
-  if (!order) {
+    setLoading(false);
+  }, [orderId]);
+
+  if (loading) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#5E3D1C] mx-auto"></div>
-            <p className="mt-4 text-lg">Loading order details...</p>
-          </div>
-        </main>
-        <Footer />
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-lg">Loading order details...</p>
       </div>
     );
   }
-  
+
+  if (!order) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center">
+        <h1 className="text-2xl font-bold text-red-600 mb-4">
+          Order Not Found
+        </h1>
+        <p className="text-gray-700 mb-6">
+          We couldn't find the details for this order. It might have been
+          cleared from your session.
+        </p>
+        <Link
+          href="/"
+          className="bg-[#5E3D1C] text-white py-2 px-6 rounded-md font-medium hover:bg-[#4a3016] transition-colors"
+        >
+          Go to Homepage
+        </Link>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-500 mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            
-            <h1 className="text-3xl font-bold text-[#5E3D1C]">Order Placed Successfully!</h1>
-            <p className="text-gray-600 mt-2">Thank you for your order. We're preparing your delicious pizza!</p>
-          </div>
-          
-          <div className="border-t border-b py-4 mb-6">
-            <div className="flex justify-between mb-2">
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-green-600">
+            Thank You for Your Order!
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Your order has been placed successfully.
+          </p>
+        </div>
+
+        <div className="bg-gray-100 rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold text-[#5E3D1C] mb-4">
+            Order Summary
+          </h2>
+          <div className="space-y-3">
+            <div className="flex justify-between">
               <span className="font-medium">Order ID:</span>
-              <span>{order.id}</span>
+              <span className="text-gray-700">{order.id}</span>
             </div>
-            <div className="flex justify-between mb-2">
+            <div className="flex justify-between">
               <span className="font-medium">Date:</span>
-              <span>{new Date(order.date).toLocaleString()}</span>
+              <span className="text-gray-700">
+                {new Date(order.date).toLocaleString()}
+              </span>
             </div>
             <div className="flex justify-between">
               <span className="font-medium">Total Amount:</span>
-              <span className="font-bold">Rs. {order.total}</span>
+              <span className="font-bold text-lg">Rs. {order.total}</span>
             </div>
-          </div>
-          
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-[#5E3D1C] mb-4">Delivery Information</h2>
-            <p><span className="font-medium">Name:</span> {order.customer.fullName}</p>
-            <p><span className="font-medium">Address:</span> {order.customer.address}, {order.customer.city}, {order.customer.zipCode}</p>
-            <p><span className="font-medium">Phone:</span> {order.customer.phone}</p>
-            <p><span className="font-medium">Payment Method:</span> Cash on Delivery</p>
-          </div>
-          
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-[#5E3D1C] mb-4">Order Summary</h2>
-            <div className="space-y-2">
-              {order.items.map((item) => (
-                <div key={`${item.id}-${item.size}`} className="flex justify-between">
-                  <div>
-                    <span className="font-medium">{item.item_name}</span>
-                    <span className="text-sm text-gray-600"> ({item.size}) x{item.quantity}</span>
-                  </div>
-                  <span>Rs. {item.item_price * item.quantity}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="text-center">
-            <Link href="/menu" className="inline-block bg-[#5E3D1C] text-white py-3 px-6 rounded-md font-medium hover:bg-[#4a3016] transition-colors">
-              Continue Shopping
-            </Link>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-[#5E3D1C] mb-3">
+            Items Ordered
+          </h3>
+          <ul className="space-y-3">
+            {order.items.map((item) => (
+              <li
+                key={`${item.id}-${item.size}`}
+                className="flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-medium">
+                    {item.item_name} ({item.size})
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Quantity: {item.quantity}
+                  </p>
+                </div>
+                <p className="font-semibold">
+                  Rs. {item.item_price * item.quantity}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="text-center mt-8">
+          <Link
+            href="/menu"
+            className="bg-[#5E3D1C] text-white py-3 px-8 rounded-md font-medium hover:bg-[#4a3016] transition-colors"
+          >
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

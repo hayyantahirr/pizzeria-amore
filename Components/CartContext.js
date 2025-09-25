@@ -9,31 +9,31 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   // State to hold the selected product for the modal
   const [selectedProduct, setSelectedProduct] = useState(null);
-  
+
   // State to control modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // State to control sidebar visibility
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+
   // State to hold cart items
   const [cartItems, setCartItems] = useState([]);
 
   // Load cart from localStorage on initial render
   useEffect(() => {
-    const savedCart = localStorage.getItem('pizzeriaAmoreCart');
+    const savedCart = localStorage.getItem("pizzeriaAmoreCart");
     if (savedCart) {
       try {
         setCartItems(JSON.parse(savedCart));
       } catch (error) {
-        console.error('Failed to parse cart from localStorage:', error);
+        console.error("Failed to parse cart from localStorage:", error);
       }
     }
   }, []);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('pizzeriaAmoreCart', JSON.stringify(cartItems));
+    localStorage.setItem("pizzeriaAmoreCart", JSON.stringify(cartItems));
   }, [cartItems]);
 
   // Function to open the modal with a product
@@ -53,7 +53,7 @@ export const CartProvider = ({ children }) => {
 
   // Function to toggle sidebar
   const toggleSidebar = () => {
-    setIsSidebarOpen(prev => !prev);
+    setIsSidebarOpen((prev) => !prev);
   };
 
   // Function to add an item to the cart
@@ -63,7 +63,7 @@ export const CartProvider = ({ children }) => {
       const existingItemIndex = prevItems.findIndex(
         (item) => item.id === product.id && item.size === size
       );
-      
+
       if (existingItemIndex >= 0) {
         // If item exists with same size, update its quantity
         const updatedItems = [...prevItems];
@@ -95,8 +95,8 @@ export const CartProvider = ({ children }) => {
 
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId && item.size === size 
-          ? { ...item, quantity: newQuantity } 
+        item.id === productId && item.size === size
+          ? { ...item, quantity: newQuantity }
           : item
       )
     );
@@ -104,54 +104,60 @@ export const CartProvider = ({ children }) => {
 
   // Calculate the total number of items in the cart
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  
+
   // Calculate the total price of items in the cart
-  const cartTotal = cartItems.reduce(
-    (total, item) => {
-      // Get the price based on size
-      let price = item.item_price;
-      if (item.size === "Extra Small" && item.item_xs_price) {
-        price = item.item_xs_price;
-      } else if (item.size === "Small" && item.item_sm_price) {
-        price = item.item_sm_price;
-      } else if (item.size === "Medium" && item.item_md_price) {
-        price = item.item_md_price;
-      } else if (item.size === "Large" && item.item_l_price) {
-        price = item.item_l_price;
-      } else if (item.size === "Extra Large" && item.item_xl_price) {
-        price = item.item_xl_price;
-      } else {
-        // Apply multiplier if specific price not available
-        const multipliers = {
-          "Extra Small": 0.7,
-          "Small": 0.85,
-          "Medium": 1,
-          "Large": 1.2,
-          "Extra Large": 1.4
-        };
-        price = Math.round(item.item_price * multipliers[item.size]);
-      }
-      
-      return total + price * item.quantity;
-    },
-    0
-  );
-  
+  const cartTotal = cartItems.reduce((total, item) => {
+    // Get the price based on size
+    let price = item.item_price;
+    if (item.size === "Extra Small" && item.item_xs_price) {
+      price = item.item_xs_price;
+    } else if (item.size === "Small" && item.item_sm_price) {
+      price = item.item_sm_price;
+    } else if (item.size === "Medium" && item.item_md_price) {
+      price = item.item_md_price;
+    } else if (item.size === "Large" && item.item_l_price) {
+      price = item.item_l_price;
+    } else if (item.size === "Extra Large" && item.item_xl_price) {
+      price = item.item_xl_price;
+    } else {
+      // Apply multiplier if specific price not available
+      const multipliers = {
+        "Extra Small": 0.7,
+        Small: 0.85,
+        Medium: 1,
+        Large: 1.2,
+        "Extra Large": 1.4,
+      };
+      price = Math.round(item.item_price * multipliers[item.size]);
+    }
+
+    return total + price * item.quantity;
+  }, 0);
+
   // Calculate tax (10% of subtotal)
-  const taxAmount = Math.round(cartTotal * 0.10);
-  
+  const taxAmount = Math.round(cartTotal * 0.1);
+
   // Calculate final total with tax
   const finalTotal = cartTotal + taxAmount;
 
   // Check if a product is in the cart
   const isInCart = (productId, size) => {
-    return cartItems.some(item => item.id === productId && item.size === size);
+    return cartItems.some(
+      (item) => item.id === productId && item.size === size
+    );
   };
 
   // Get quantity of a product in cart
   const getCartItemQuantity = (productId, size) => {
-    const item = cartItems.find(item => item.id === productId && item.size === size);
+    const item = cartItems.find(
+      (item) => item.id === productId && item.size === size
+    );
     return item ? item.quantity : 0;
+  };
+
+  // Function to clear the entire cart
+  const clearCart = () => {
+    setCartItems([]);
   };
 
   // Provide the cart state and functions to children components
@@ -173,21 +179,20 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         updateQuantity,
         isInCart,
-        getCartItemQuantity
+        getCartItemQuantity,
+        clearCart,
       }}
     >
       {children}
     </CartContext.Provider>
   );
 };
-        
-  
 
 // Custom hook to use the cart context in components
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };
