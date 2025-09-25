@@ -1,6 +1,8 @@
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AnimateOnScroll from "./AnimateOnScroll";
 
 const watermarkSrc = "/extra's/whole-pizza-watermark.png";
 const mainImageSrc = "/pizza-images/premio.jpg";
@@ -8,7 +10,7 @@ const signatureSrc = "/extra's/signature design.svg";
 
 const Hero = () => {
   return (
-    <section className="mt-15 relative w-full min-h-[70vh] flex items-center justify-center  overflow-hidden">
+    <section className="mt-15 relative w-full min-h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Watermark images (always visible, but only 4 on mobile) */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none select-none">
         {/* 4 watermark images always visible */}
@@ -75,35 +77,46 @@ const Hero = () => {
         {/* Text content (left, always visible) */}
         <div className="flex-1 flex flex-col items-start text-left order-2 md:order-1 mr-5">
           {/* Signature image above heading (always visible) */}
-          <div className="mb-2 w-48 md:w-64 ">
-            <Image
-              src={signatureSrc}
-              alt="Signature"
-              width={308}
-              height={46}
-              className="w-full h-auto"
-            />
-          </div>
+          <AnimateOnScroll animation="fadeInDown" duration={1.2} delay={0.2}>
+            <div className="mb-2 w-48 md:w-64">
+              <Image
+                src={signatureSrc}
+                alt="Signature"
+                width={308}
+                height={46}
+                className="w-full h-auto"
+              />
+            </div>
+          </AnimateOnScroll>
+          
           {/* Main heading (black) */}
-          <h1 className="text-xl md:text-3xl font-extrabold text-black leading-tight mb-2 font-serif ">
-            Love baked within every crust, cheese melts into hearts
-          </h1>
+          <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.4}>
+            <h1 className="text-xl md:text-3xl font-extrabold text-black leading-tight mb-2 font-serif">
+              Love baked within every crust, cheese melts into hearts
+            </h1>
+          </AnimateOnScroll>
+          
           {/* Subtext below heading */}
-          <p className="text-base md:text-lg text-gray-700 mb-6 font-light max-w-xl">
-            Experience the authentic taste of Italy with our handcrafted pizzas,
-            fresh ingredients, and cozy atmosphere. Your slice of amore awaits!
-          </p>
-          <Link href="/menu">
-            <button
-              href="/menu"
-              className="inline-block bg-[#DE6868] text-white text-lg md:text-xl  px-2 py-1 rounded-lg shadow hover:bg-[#c94c4c] transition-colors duration-200"
-            >
-              View Menu
-            </button>
-          </Link>
+          <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.6}>
+            <p className="text-base md:text-lg text-gray-700 mb-6 font-light max-w-xl">
+              Experience the authentic taste of Italy with our handcrafted pizzas,
+              fresh ingredients, and cozy atmosphere. Your slice of amore awaits!
+            </p>
+          </AnimateOnScroll>
+          
+          <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.8}>
+            <Link href="/menu">
+              <button
+                className="inline-block bg-[#DE6868] text-white text-lg md:text-xl px-2 py-1 rounded-lg shadow hover:bg-[#c94c4c] transition-colors duration-200"
+              >
+                View Menu
+              </button>
+            </Link>
+          </AnimateOnScroll>
         </div>
+        
         {/* Main image (right, desktop only) */}
-        <div className="hidden md:flex flex-1 items-center justify-center order-1 md:order-2">
+        <AnimateOnScroll animation="zoomIn" duration={1.2} delay={0.3} className="hidden md:flex flex-1 items-center justify-center order-1 md:order-2">
           <div className="relative w-80 h-80 rounded-full shadow-lg overflow-hidden">
             <Image
               src={mainImageSrc}
@@ -113,7 +126,7 @@ const Hero = () => {
               priority
             />
           </div>
-        </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

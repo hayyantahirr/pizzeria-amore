@@ -1,6 +1,9 @@
+
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import AnimateOnScroll from "./AnimateOnScroll";
 
 // Assets
 const signatureSrc = "/extra's/signature design.svg";
@@ -20,64 +23,80 @@ const AboutSec1 = () => {
           {/* Image collage left (4 images) */}
           <div className="order-1">
             <div className="grid grid-cols-2 gap-4 md:gap-8">
-              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-md">
-                <Image
-                  src={imageOne}
-                  alt="Plain Fries"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md translate-y-10 md:translate-y-10">
-                <Image
-                  src={imageTwo}
-                  alt="Premio Pizza"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md -translate-y-2 md:-translate-y-4">
-                <Image
-                  src={imageThree}
-                  alt="Mushroom Madness"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-md">
-                <Image
-                  src={imageFour}
-                  alt="Tomato Paradise"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <AnimateOnScroll animation="fadeInLeft" duration={1} delay={0.2}>
+                <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-md">
+                  <Image
+                    src={imageOne}
+                    alt="Plain Fries"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+              </AnimateOnScroll>
+              <AnimateOnScroll animation="fadeInDown" duration={1} delay={0.4}>
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md translate-y-10 md:translate-y-10">
+                  <Image
+                    src={imageTwo}
+                    alt="Premio Pizza"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </AnimateOnScroll>
+              <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.6}>
+                <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-md -translate-y-2 md:-translate-y-4">
+                  <Image
+                    src={imageThree}
+                    alt="Mushroom Madness"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </AnimateOnScroll>
+              <AnimateOnScroll animation="fadeInRight" duration={1} delay={0.8}>
+                <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-md">
+                  <Image
+                    src={imageFour}
+                    alt="Tomato Paradise"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </AnimateOnScroll>
             </div>
           </div>
           {/* Text right */}
           <div className="order-2">
-            <div className="mb-3">
-              <Image
-                src={signatureSrc}
-                alt="Signature"
-                width={220}
-                height={60}
-              />
-            </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-black leading-tight mb-4 font-serif">
-              About Pizzeria Amore
-            </h2>
-            <p className="text-base md:text-lg text-[#2B231D] mb-6 max-w-xl">
-              From hand-stretched dough to slow-simmered sauces, every bite is
-              our love letter to Italian tradition. Gather around, share a
-              slice, and taste the craft in every layer.
-            </p>
-            <Link href="/contact">
-              <h3 className="inline-block text-[#DE6868] text-sm md:text-md font-semibold">
-                Contact Us
-              </h3>
-            </Link>
+            <AnimateOnScroll animation="fadeInDown" duration={1} delay={0.3}>
+              <div className="mb-3">
+                <Image
+                  src={signatureSrc}
+                  alt="Signature"
+                  width={220}
+                  height={60}
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInRight" duration={1} delay={0.5}>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-black leading-tight mb-4 font-serif">
+                About Pizzeria Amore
+              </h2>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInRight" duration={1} delay={0.7}>
+              <p className="text-base md:text-lg text-[#2B231D] mb-6 max-w-xl">
+                From hand-stretched dough to slow-simmered sauces, every bite is
+                our love letter to Italian tradition. Gather around, share a
+                slice, and taste the craft in every layer.
+              </p>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.9}>
+              <Link href="/contact">
+                <h3 className="inline-block text-[#DE6868] text-sm md:text-md font-semibold">
+                  Contact Us
+                </h3>
+              </Link>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
@@ -87,39 +106,48 @@ const AboutSec1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Text left */}
           <div className="order-2 lg:order-1">
-            <div className="mb-3">
-              <Image
-                src={signatureSrc}
-                alt="Signature"
-                width={220}
-                height={60}
-              />
-            </div>
-            <h3 className="text-2xl md:text-4xl font-bold text-black leading-tight mb-4 font-serif">
-              Crafted With Heart
-            </h3>
-            <p className="text-base md:text-lg text-[#2B231D] mb-6 max-w-xl">
-              Every day begins with fresh ingredients and ends with smiles
-              around the table. Our kitchen is where simple ingredients become
-              unforgettable memories.
-            </p>
-            <a
-              href="/menu"
-              className="inline-block text-[#DE6868] text-sm md:text-md font-semibold"
-            >
-              Explore our menu
-            </a>
+            <AnimateOnScroll animation="fadeInDown" duration={1} delay={0.3}>
+              <div className="mb-3">
+                <Image
+                  src={signatureSrc}
+                  alt="Signature"
+                  width={220}
+                  height={60}
+                />
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInLeft" duration={1} delay={0.5}>
+              <h3 className="text-2xl md:text-4xl font-bold text-black leading-tight mb-4 font-serif">
+                Crafted With Heart
+              </h3>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInLeft" duration={1} delay={0.7}>
+              <p className="text-base md:text-lg text-[#2B231D] mb-6 max-w-xl">
+                Every day begins with fresh ingredients and ends with smiles
+                around our tables. We're not just making pizza; we're creating
+                moments of joy and connection through authentic Italian flavors.
+              </p>
+            </AnimateOnScroll>
+            <AnimateOnScroll animation="fadeInUp" duration={1} delay={0.9}>
+              <Link href="/menu">
+                <h3 className="inline-block text-[#DE6868] text-sm md:text-md font-semibold">
+                  View Our Menu
+                </h3>
+              </Link>
+            </AnimateOnScroll>
           </div>
           {/* Image right */}
           <div className="order-1 lg:order-2">
-            <div className="relative w-full aspect-[4/5] md:aspect-[5/4] rounded-2xl overflow-hidden shadow-md">
-              <Image
-                src={sectionTwoImage}
-                alt="Our pizza shop"
-                fill
-                className="object-cover"
-              />
-            </div>
+            <AnimateOnScroll animation="fadeInRight" duration={1} delay={0.4}>
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                <Image
+                  src={sectionTwoImage}
+                  alt="Pizza Shop"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>

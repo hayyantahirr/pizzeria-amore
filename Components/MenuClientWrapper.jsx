@@ -5,6 +5,7 @@ import CartButton from './CartButton';
 import CartSidebar from './CartSidebar';
 import CartModalWrapper from './CartModalWrapper';
 import AddToCartButton from './AddToCartButton';
+import AnimateOnScroll from './AnimateOnScroll';
 
 // This client component wraps all the cart-related functionality
 export default function MenuClientWrapper({ products }) {
@@ -16,37 +17,45 @@ export default function MenuClientWrapper({ products }) {
         {Object.keys(products).length > 0 ? (
           Object.keys(products).map((category) => (
             <div key={category} className="category-section my-8 md:my-12">
-              <h2 className="text-2xl md:text-3xl font-bold text-[#5E3D1C] mb-4 md:mb-6">
-                {category}
-              </h2>
+              <AnimateOnScroll animation="fadeInLeft" duration={0.8}>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#5E3D1C] mb-4 md:mb-6">
+                  {category}
+                </h2>
+              </AnimateOnScroll>
               <div className="products-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 my-4 md:my-8">
-                {products[category].map((product) => (
-                  <div
-                    key={product.id}
-                    className="product-card border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                {products[category].map((product, index) => (
+                  <AnimateOnScroll 
+                    key={product.id} 
+                    animation="fadeInUp" 
+                    delay={index % 3 * 0.1} 
+                    duration={0.8}
                   >
-                    <div className="product-image relative h-48 md:h-64 bg-gray-100">
-                      <img
-                        src={product.item_pic}
-                        alt={product.item_name}
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                    <div className="product-info p-3 md:p-4">
-                      <h3 className="text-base md:text-lg font-semibold text-[#5E3D1C]">
-                        {product.item_name}
-                      </h3>
-                      <p className="text-gray-600 text-xs md:text-sm mt-1 line-clamp-2">
-                        {product.item_desc || "No description available"}
-                      </p>
-                      <div className="flex justify-between items-center mt-3 md:mt-4">
-                        <span className="text-[#5E3D1C] font-bold text-sm md:text-base">
-                          Rs. {product.item_price}
-                        </span>
-                        <AddToCartButton product={product} />
+                    <div
+                      className="product-card border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                    >
+                      <div className="product-image relative h-48 md:h-64 bg-gray-100">
+                        <img
+                          src={product.item_pic}
+                          alt={product.item_name}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                      <div className="product-info p-3 md:p-4">
+                        <h3 className="text-base md:text-lg font-semibold text-[#5E3D1C]">
+                          {product.item_name}
+                        </h3>
+                        <p className="text-gray-600 text-xs md:text-sm mt-1 line-clamp-2">
+                          {product.item_desc || "No description available"}
+                        </p>
+                        <div className="flex justify-between items-center mt-3 md:mt-4">
+                          <span className="text-[#5E3D1C] font-bold text-sm md:text-base">
+                            Rs. {product.item_price}
+                          </span>
+                          <AddToCartButton product={product} />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </AnimateOnScroll>
                 ))}
               </div>
             </div>

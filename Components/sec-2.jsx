@@ -1,5 +1,8 @@
+
 import React from "react";
 import Image from "next/image";
+import AnimateOnScroll from "./AnimateOnScroll";
+import Link from "next/link";
 
 const wholeWatermark = "/extra's/whole-pizza-watermark.png";
 const sliceWatermark = "/extra's/pizza-slice-watermark.png";
@@ -73,68 +76,81 @@ const Sec2 = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           {/* Signature above heading */}
-          <div className="mb-6">
-            <Image
-              src={signature}
-              alt="Signature"
-              width={200}
-              height={60}
-              className="mx-auto"
-            />
-          </div>
+          <AnimateOnScroll animation="fadeIn" duration={1} delay={0.2}>
+            <div className="mb-6">
+              <Image
+                src={signature}
+                alt="Signature"
+                width={200}
+                height={60}
+                className="mx-auto"
+              />
+            </div>
+          </AnimateOnScroll>
 
           {/* Main heading */}
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-semibold text-black mb-6">
-            Today's Special
-          </h2>
+          <AnimateOnScroll animation="fadeInUp" duration={1.2} delay={0.4}>
+            <h2 className="text-3xl md:text-4xl lg:text-6xl font-semibold text-black mb-6">
+              Today's Special
+            </h2>
+          </AnimateOnScroll>
         </div>
 
         {/* Pizza cards */}
         <div className="flex flex-col md:flex-row lg:flex-row gap-8 lg:gap-12 justify-center items-center">
           {pizzaImages.map((image, index) => (
-            <div
+            <AnimateOnScroll
               key={index}
-              className="bg-white rounded-md overflow-hidden duration-300 w-[325px] h-[438px] flex flex-col"
+              animation={
+                index === 0
+                  ? "fadeInLeft"
+                  : index === 1
+                  ? "fadeInUp"
+                  : "fadeInRight"
+              }
+              duration={1}
+              delay={0.3 + index * 0.2}
             >
-              {/* Pizza image */}
-              <div className="flex justify-center py-2">
-                <Image
-                  src={image}
-                  alt={`Pizza ${index + 1}`}
-                  width={158}
-                  height={158}
-                  className="w-[158px] h-[158px] object-cover rounded-lg "
-                />
-              </div>
-
-              {/* Card content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-bold text-black mb-3">
-                    {index === 0
-                      ? "Alpine Pizza"
-                      : index === 1
-                      ? "Cheesy Lord"
-                      : "Mushroom Madness"}
-                  </h3>
-                  <p className="text-gray-600 mb-4 text-sm leading-relaxed">
-                    {index === 0
-                      ? "Fresh mountain herbs & premium cheese blend on our signature crust"
-                      : index === 1
-                      ? "Triple cheese blend with gourmet toppings and fresh basil"
-                      : "Wild mushrooms & truffle oil on artisan dough"}
-                  </p>
+              <div className="bg-white rounded-md overflow-hidden duration-300 w-[325px] h-[438px] flex flex-col">
+                {/* Pizza image */}
+                <div className="flex justify-center py-2">
+                  <Image
+                    src={image}
+                    alt={`Pizza ${index + 1}`}
+                    width={158}
+                    height={158}
+                    className="w-[158px] h-[158px] object-cover rounded-lg"
+                  />
                 </div>
-                <button className="text-[#DE6868] font-semibold text-sm hover:text-[#c55a5a] transition-colors duration-300 self-start">
-                  Explore More →
-                </button>
+
+                {/* Card content */}
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-black mb-3">
+                      {index === 0
+                        ? "Alpine Pizza"
+                        : index === 1
+                        ? "Cheesy Lord"
+                        : "Mushroom Madness"}
+                    </h3>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                      {index === 0
+                        ? "Fresh mountain herbs & premium cheese blend on our signature crust"
+                        : index === 1
+                        ? "Triple cheese blend with gourmet toppings and fresh basil"
+                        : "Wild mushrooms & truffle oil on artisan dough"}
+                    </p>
+                  </div>
+                  <Link href={"/menu"}>
+                    <button className="text-[#DE6868] font-semibold text-sm hover:text-[#c55a5a] transition-colors duration-300 self-start">
+                      Explore More →
+                    </button>
+                  </Link>
+                </div>
               </div>
-            </div>
+            </AnimateOnScroll>
           ))}
         </div>
-
-        {/* Call to action */}
-        
       </div>
     </section>
   );
