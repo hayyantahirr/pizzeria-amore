@@ -13,9 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Pizzeria Amore",
+  title: {
+    default: "Pizzeria Amore",
+    template: "%s | Pizzeria Amore", // lets you have dynamic titles later
+  },
   description:
     "Authentic Italian pizzeria serving wood-fired pizzas, fresh pasta, and classic desserts in a cozy neighborhood atmosphere.",
+
+  // Favicon & icons
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -25,20 +30,22 @@ export const metadata = {
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
   manifest: "/manifest.json",
+
+  // Open Graph (Facebook, WhatsApp, LinkedIn previews)
   openGraph: {
     title: "Pizzeria Amore",
     description:
-      "Authentic Italian pizzeria serving wood-fired pizzas, fresh pasta, and classic desserts in a cozy neighborhood atmosphere.",
-    // url: "https://pizzeria-amore.com",
+      "Pizzeria Amore brings 100% authentic Italian pizza to Pakistan, Rome, and Italy. Enjoy wood-fired pizzas, homemade pasta, classic Italian desserts, fresh appetizers, and traditional drinks. Serving a huge variety of pizzas in Karachi, Lahore, and Islamabad with fast delivery and a cozy dine-in atmosphere. Your #1 spot for authentic Italian flavor in every bite.",
+    url: "https://pizzeria-amore.vercel.app",
     siteName: "Pizzeria Amore",
-    // images: [
-    //   {
-    //     url: "https://pizzeria-amore.com/og-image.jpg",
-    //     width: 1200,
-    //     height: 630,
-    //     alt: "Pizzeria Amore",
-    //   },
-    // ],
+    images: [
+      {
+        url: "https://pizzeria-amore.vercel.app/logo.svg", // put an image in /public
+        width: 1200,
+        height: 630,
+        alt: "Wood-fired pizza from Pizzeria Amore",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },

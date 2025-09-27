@@ -5,7 +5,7 @@ import "animate.css";
 
 /**
  * AnimateOnScroll - A wrapper component that applies animate.css animations when elements enter the viewport
- * 
+ *
  * @param {Object} props
  * @param {React.ReactNode} props.children - Child elements to be animated
  * @param {string} props.animation - Animation name from animate.css (e.g., "fadeInUp", "fadeIn")
@@ -39,7 +39,7 @@ const AnimateOnScroll = ({
         if (entry.isIntersecting) {
           setIsVisible(true);
           setHasAnimated(true);
-          
+
           // If once is true, unobserve after animation is triggered
           if (once) {
             observer.unobserve(entry.target);
@@ -66,8 +66,10 @@ const AnimateOnScroll = ({
   }, [threshold, once]);
 
   // Prepare animation classes
-  const animationClass = isVisible ? `animate__animated animate__${animation}` : "";
-  
+  const animationClass = isVisible
+    ? `animate__animated animate__${animation}`
+    : "";
+
   // Prepare animation style
   const animationStyle = {
     animationDuration: `${duration}s`,
