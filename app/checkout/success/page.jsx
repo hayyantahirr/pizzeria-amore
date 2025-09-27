@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useCart } from "@/Components/CartContext";
 import AnimateOnScroll from "@/Components/AnimateOnScroll";
 
-export default function OrderSuccessPage() {
+// ⬇️ Move all the logic with useSearchParams here
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [order, setOrder] = useState(null);
@@ -14,7 +15,6 @@ export default function OrderSuccessPage() {
   const { clearCart } = useCart();
 
   useEffect(() => {
-    // Load order details from localStorage when the component mounts
     if (orderId) {
       const savedOrders = JSON.parse(
         localStorage.getItem("pizzeriaAmoreOrders") || "[]"
@@ -22,13 +22,13 @@ export default function OrderSuccessPage() {
       const currentOrder = savedOrders.find((o) => o.id === orderId);
       setOrder(currentOrder);
 
-      // Clear the cart only after the order is successfully loaded
       if (currentOrder) {
         clearCart();
       }
     }
 
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
 
   if (loading) {
@@ -124,6 +124,7 @@ export default function OrderSuccessPage() {
             </ul>
           </div>
         </AnimateOnScroll>
+
         <AnimateOnScroll animation="fadeInUp" delay={0.7} duration={1}>
           <div className="text-center mt-8">
             <Link
@@ -136,5 +137,14 @@ export default function OrderSuccessPage() {
         </AnimateOnScroll>
       </div>
     </div>
+  );
+}
+
+// ⬇️ Wrap that component in a Suspense boundary here
+export default function OrderSuccessPage() {
+  return (
+    <Suspense fallback={<div className="text-center mt-20">Loading...</div>}>
+      <OrderSuccessContent />
+    </Suspense>
   );
 }

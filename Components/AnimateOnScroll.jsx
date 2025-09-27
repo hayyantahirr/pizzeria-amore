@@ -63,7 +63,7 @@ const AnimateOnScroll = ({
         observer.unobserve(elementRef.current);
       }
     };
-  }, [threshold, once, hasAnimated]);
+  }, [threshold, once]);
 
   // Prepare animation classes
   const animationClass = isVisible ? `animate__animated animate__${animation}` : "";
