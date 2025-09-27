@@ -49,6 +49,10 @@ export const metadata = {
     locale: "en_US",
     type: "website",
   },
+  verification: {
+    google: "_LDNpIVLGgeCpF8cWj64jU2idrFJCv9i9rRwhdIAy_Q",
+  },
+  
 };
 
 export default function RootLayout({ children }) {
