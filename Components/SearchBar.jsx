@@ -157,7 +157,7 @@ const SearchBar = () => {
                         alt={product.item_name}
                         className="w-12 h-12 object-cover rounded-md"
                         onError={(e) => {
-                          e.target.src = "/logo.jpg";
+                          e.target.src = "/logo.svg";
                         }}
                       />
                       <div className="flex-1">

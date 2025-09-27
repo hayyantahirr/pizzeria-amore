@@ -66,7 +66,7 @@ const Navbar = () => {
             >
               <a href="/" className="flex items-center">
                 <Image
-                  src="/logo.jpg"
+                  src="/logo.svg"
                   alt="Logo"
                   width={56}
                   height={56}

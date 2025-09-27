@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="w-82">
             <div className="flex items-center">
               <Image
-                src="/logo.jpg"
+                src="/logo.svg"
                 alt="Pizzeria Amore Logo"
                 width={140}
                 height={140}

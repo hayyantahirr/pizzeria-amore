@@ -141,7 +141,7 @@ const CartSidebar = () => {
                   >
                     <div className="relative h-16 w-16 flex-shrink-0">
                       <Image
-                        src={item.item_pic || "/logo.jpg"}
+                        src={item.item_pic || "/logo.svgh"}
                         alt={item.item_name}
                         fill
                         className="object-cover rounded-md"
